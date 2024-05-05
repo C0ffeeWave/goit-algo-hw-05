@@ -1,4 +1,10 @@
+import re
+from typing import Callable
+
 def input_error(func):
+    """
+    Декоратор, який обробляє помилки введення для функцій.
+    """
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
@@ -13,6 +19,9 @@ def input_error(func):
 
 @input_error
 def add_contact(args, contacts):
+    """
+    Додає новий контакт.
+    """
     if len(args) != 2:
         raise IndexError
     name, phone = args
@@ -21,6 +30,9 @@ def add_contact(args, contacts):
 
 @input_error
 def change_contact(args, contacts):
+    """
+    Змінює існуючий контакт.
+    """
     if len(args) != 2:
         raise IndexError
     name, phone = args
@@ -31,6 +43,9 @@ def change_contact(args, contacts):
 
 @input_error
 def show_phone(args, contacts):
+    """
+    Показує номер телефону для вказаного контакту.
+    """
     if len(args) != 1:
         raise IndexError
     name = args[0]
@@ -40,16 +55,25 @@ def show_phone(args, contacts):
 
 @input_error
 def show_all(contacts):
+    """
+    Показує всі контакти.
+    """
     if not contacts:
         return "Контакти не знайдено."
     return "\n".join(f"{name}: {phone}" for name, phone in contacts.items())
 
 def parse_input(user_input):
+    """
+    Розбиває введену команду на команду та аргументи.
+    """
     cmd, *args = user_input.split()
     cmd = cmd.strip().lower()
     return cmd, args
 
 def main():
+    """
+    Головна функція програми.
+    """
     contacts = {}
     print("Ласкаво просимо до бота-помічника!")
     while True:
